@@ -16,7 +16,7 @@ func FMSNewnode(port int)*DHTNode.DHTNode{
 	Iter.Data.SelfInfo.NexAddr= LocalAddress +":"+strconv.Itoa(port)
 	Iter.Data.SelfInfo.Key=*DHTNode.PKSHash(Iter.Data.SelfInfo.NexAddr)
 	tmp, err := net.Listen("tcp", Iter.Data.SelfInfo.NexAddr)
-	fmt.Println(Iter.Data.SelfInfo.NexAddr)
+	fmt.Println("your IP is:"+Iter.Data.SelfInfo.NexAddr)
 	if err != nil {
 		fmt.Println("error in tools.go Run()")
 		return nil

@@ -46,13 +46,14 @@ func main(){
 		fmt.Println("What do you want to do(read your option)")
 		fmt.Println("option 0: upload ")
 		fmt.Println("option 1: download ")
-		//fmt.Println("option 2: NewNode ")
+		fmt.Println("option 2: help")
 		//fmt.Println("option 3: Quit ")
-		fmt.Println("option 2: exit ")
+		fmt.Println("option 3: exit ")
 		fmt.Scanf("%d",&op)
 		switch op {
 			case 0:FMS.Upload(node)
 			case 1:FMS.Download(node)
+			case 2:FMS.Help(node.Data.SelfInfo.NexAddr)
 			default:
 				{
 					node.Quit()

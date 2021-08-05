@@ -15,10 +15,20 @@ type FileInfo struct{
 	PieceHash string
 	Length int
 }
-
 const PieceSize=1000000
+func Help(IP string){
+	fmt.Println("This is File Management System")
+	fmt.Println("You can manage or transport your file in this system")
+	fmt.Println("You can upload files or download files which you upload")
+	fmt.Println("Every file you upload should in folder named Upload")
+	fmt.Println("Every file you download will be downloaded in folder named Download")
+	fmt.Println("Seed you get will be stored in folder named Seed")
+	fmt.Println("your IP is :",IP)
+
+}
 func Download(Node *DHTNode.DHTNode){
-	fmt.Print("What do you want to Download(link file name):")
+	DHTNode.FMSflag=true
+	fmt.Print("What do you want to Download(file name):")
 	var inFile string
 	fmt.Scanf("%s",&inFile)
 	file,err:=os.Open("Seed/"+inFile)
@@ -53,12 +63,14 @@ func Download(Node *DHTNode.DHTNode){
 		now:=<-result
 		//time.Sleep(time.Millisecond*10)
 		sum+=now.End-now.Begin
-		fmt.Println("Loading",float32(sum)/1024/1024,"MB/",float32(BT.Length)/1024/1024,"MB        percent:",float32(sum)/float32(BT.Length)*100,"%     NowTime:",time.Since(time0))
+		if DHTNode.FMSflag{ fmt.Println("Loading",float32(sum)/1024/1024,"MB/",float32(BT.Length)/1024/1024,"MB        percent:",float32(sum)/float32(BT.Length)*100,"%     NowTime:",time.Since(time0))}
 		//fmt.Println("Loading",sum,"/",BT.Length,"           percent:",float32(sum)/float32(BT.Length)*100,"%")
 		copy(reply[now.Begin:now.End],now.Ans)
 	}
-	file,err=os.Create("Download/"+BT.Name)
-	file.Write(reply)
+	if DHTNode.FMSflag {
+		file, err = os.Create("Download/" + BT.Name)
+		file.Write(reply)
+	}
 }
 func Upload(Node *DHTNode.DHTNode){
 	fmt.Print("What do you want to Upload:")

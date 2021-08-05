@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+var FMSflag bool
 type Replytype struct {
 	Begin,End int
 	Ans []byte
@@ -28,7 +29,8 @@ func (this *DHTNode)FMSGet(Key Asktype,reply *chan Replytype){
 	tmp.End=Key.End
 	pks1,Back:=this.Get(string(Key.Ask))
 	if pks1==false{
-		fmt.Println("Can't Find the Hash")
+		FMSflag=false
+		fmt.Println("Download Fail")
 		*reply<-tmp
 	}
 	tmp.Ans=[]byte(Back)
